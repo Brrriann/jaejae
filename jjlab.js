@@ -10,18 +10,16 @@
 (function () {
   'use strict';
 
-  // 중복 로드 방지 (본문 + footer 양쪽에 들어가도 한 번만 실행)
-  if (window.__jjLabLoaded) return;
-  window.__jjLabLoaded = true;
-
   // reveal 숨김 활성화 (이 클래스가 없으면 .reveal 은 그냥 보임)
   if (document.documentElement.className.indexOf('jjs') === -1) {
     document.documentElement.className += ' jjs';
   }
 
-  /* ── 1. 클릭 이벤트 위임 — 캡처 단계 (아임웹이 전파를 stopPropagation 해도
-         document 캡처는 가장 먼저 실행되므로 항상 잡힌다) ── */
-  document.addEventListener('click', function (e) {
+  /* ── 1. 클릭 이벤트 위임 — 캡처 단계 ──
+     ★ 핵심: 이 스크립트가 본문+footer 양쪽에서 2번 로드돼도, 기존 핸들러를
+        먼저 제거하고 다시 등록하므로 리스너는 항상 1개만 존재한다.
+        (가드만으로는 막히지 않는 환경 대비 — 토글이 두 번 실행돼 닫히는 버그 방지) */
+  function jjClick(e) {
     var t = e.target;
     var tab = t.closest ? t.closest('.ptab') : null;
     if (tab) { activateTab(tab); return; }
@@ -34,7 +32,14 @@
       if (m) m.classList.remove('open');
       if (h) h.classList.remove('open');
     }
-  }, true);
+  }
+  if (window.__jjClickHandler) document.removeEventListener('click', window.__jjClickHandler, true);
+  window.__jjClickHandler = jjClick;
+  document.addEventListener('click', jjClick, true);
+
+  // init(스크롤/IO/벤토)은 한 번만 실행
+  if (window.__jjInitDone) return;
+  window.__jjInitDone = true;
 
   /* ── 탭 전환 / 햄버거 동작 (위임과 별개로 직접 바인딩에서도 호출) ── */
   function activateTab(tab) {
