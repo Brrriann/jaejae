@@ -59,16 +59,7 @@
   function init() {
     var d = document;
 
-    // 0. 탭·햄버거에 직접 리스너 바인딩 (아임웹이 이벤트 전파를 막아도 작동)
-    d.querySelectorAll('.ptab').forEach(function (tab) {
-      tab.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); activateTab(tab); }, false);
-    });
-    var hamBtn = d.getElementById('navHam');
-    if (hamBtn) hamBtn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); toggleMenu(); }, false);
-    var mobMenu = d.getElementById('navMobile');
-    if (mobMenu) mobMenu.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { mobMenu.classList.remove('open'); if (hamBtn) hamBtn.classList.remove('open'); }, false);
-    });
+    // (탭·햄버거 클릭은 상단 document 캡처 위임 한 곳에서만 처리 — 중복 토글 방지)
 
     // 2. NAV 스크롤 감지
     var nav = d.getElementById('nav');
