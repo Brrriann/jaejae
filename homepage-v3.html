@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>재재환경연구소 — 환경교육 전문기관</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:       #0a1a10;
+      --accent:    #2a9a5a;
+      --accent-d:  #1e7a45;
+      --glow:      rgba(42,154,90,.13);
+      --canvas:    #fff;
+      --surface:   #f2f6f3;
+      --line:      #dde8e2;
+      --steel:     #3c5a48;
+      --stone:     #789080;
+      --muted:     #afc4b8;
+      --od:        #fff;
+      --od60:      rgba(255,255,255,.60);
+      --od35:      rgba(255,255,255,.35);
+      --od10:      rgba(255,255,255,.10);
+    }
+    html { font-family: 'Pretendard', 'Inter', -apple-system, sans-serif; -webkit-font-smoothing: antialiased; color: var(--ink); scroll-behavior: smooth; }
+    body { background: var(--canvas); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-left  { opacity: 0; transform: translateX(-28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal-left.in  { opacity: 1; transform: none; }
+    .reveal-right { opacity: 0; transform: translateX(28px);  transition: opacity .65s ease, transform .65s ease; }
+    .reveal-right.in { opacity: 1; transform: none; }
+    .delay-1 { transition-delay: .1s; }
+    .delay-2 { transition-delay: .2s; }
+    .delay-3 { transition-delay: .3s; }
+    .delay-4 { transition-delay: .4s; }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 14px; font-weight: 600;
+      padding: 12px 24px; border-radius: 999px;
+      cursor: pointer; border: 1.5px solid transparent;
+      font-family: inherit; white-space: nowrap;
+      transition: background .18s, color .18s, border-color .18s, transform .15s, box-shadow .18s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-dark  { background: var(--ink); color: var(--od); }
+    .btn-dark:hover { background: #163322; box-shadow: 0 6px 20px rgba(10,26,16,.35); }
+    .btn-white { background: var(--od); color: var(--ink); }
+    .btn-white:hover { box-shadow: 0 6px 20px rgba(0,0,0,.15); }
+    .btn-ghost-w { background: transparent; color: var(--od); border-color: rgba(255,255,255,.38); }
+    .btn-ghost-w:hover { border-color: rgba(255,255,255,.75); background: rgba(255,255,255,.06); }
+    .btn-accent { background: var(--accent); color: var(--od); }
+    .btn-accent:hover { background: var(--accent-d); box-shadow: 0 6px 20px rgba(42,154,90,.35); }
+    .btn-lg { font-size: 15px; padding: 14px 30px; }
+    .btn svg { transition: transform .2s; }
+    .btn:hover svg { transform: translateX(3px); }
+
+    /* CONTAINER */
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      height: 64px; display: flex; align-items: center;
+      transition: background .3s, backdrop-filter .3s, border-color .3s, box-shadow .3s;
+    }
+    .nav.scrolled {
+      background: rgba(255,255,255,.95);
+      backdrop-filter: saturate(180%) blur(16px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 12px rgba(0,0,0,.06);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-logo { height: 30px; object-fit: contain; }
+    .nav-logo-fb { width: 30px; height: 30px; background: var(--ink); border-radius: 5px; display: none; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: #fff; letter-spacing: -.5px; }
+    .nav-badge { font-size: 10px; font-weight: 600; letter-spacing: .04em; color: var(--accent-d); background: var(--glow); padding: 3px 9px; border-radius: 999px; }
+    .nav-links { display: flex; gap: 26px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--od60); transition: color .15s; }
+    .nav.scrolled .nav-links a { color: var(--steel); }
+    .nav-links a:hover, .nav.scrolled .nav-links a:hover { color: var(--ink); }
+    .nav-cta-wrap { transition: opacity .3s; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+      padding: 100px 0 80px;
+    }
+    .hero-photo {
+      position: absolute; inset: 0; z-index: 0;
+      background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1800&q=75') center/cover no-repeat;
+      transform: scale(1.28);
+      transition: transform 8s ease-out;
+      will-change: transform;
+    }
+    .hero-photo.loaded { transform: scale(1.2); }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(to right, rgba(6,16,10,.88) 0%, rgba(6,16,10,.65) 55%, rgba(6,16,10,.30) 100%),
+        linear-gradient(to top, rgba(6,16,10,.6) 0%, transparent 40%);
+    }
+    .hero-inner { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 30px; }
+    .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2.5s ease infinite; }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(42,154,90,.5)} 50%{box-shadow:0 0 0 8px rgba(42,154,90,0)} }
+    .hero-eyebrow-text { font-size: 11px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: var(--od60); }
+    .hero-h1 {
+      font-size: clamp(46px, 6.5vw, 82px);
+      font-weight: 900; letter-spacing: -.045em; line-height: 1.04;
+      color: var(--od); margin-bottom: 24px; max-width: 680px;
+    }
+    .hero-h1 .hi { color: var(--accent); position: relative; }
+    .hero-sub { font-size: 17px; font-weight: 400; line-height: 1.75; color: var(--od60); max-width: 440px; margin-bottom: 40px; }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 64px; }
+    .hero-chips {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      padding-top: 32px; border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px; padding: 7px 14px;
+      font-size: 12px; font-weight: 500; color: var(--od60);
+      backdrop-filter: blur(6px);
+      transition: background .2s, border-color .2s;
+      cursor: default;
+    }
+    .chip:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.25); color: var(--od); }
+    .chip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-hint {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--od35);
+      animation: bob 2s ease-in-out infinite;
+    }
+    @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+    .scroll-hint svg { width: 16px; height: 16px; stroke: var(--od35); }
+
+    /* ── SECTION COMMON ── */
+    .sec { padding: 96px 0; }
+    .sec-surface { background: var(--surface); }
+    .sec-dark { background: #061009; }
+    .sec-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .sec-h2 { font-size: clamp(28px, 3.5vw, 44px); font-weight: 800; letter-spacing: -.035em; line-height: 1.08; color: var(--ink); margin-bottom: 16px; }
+    .sec-lead { font-size: 16px; line-height: 1.75; color: var(--steel); max-width: 500px; margin-bottom: 56px; }
+
+    /* ── PROBLEM BENTO ── */
+    .sec-prob { background: #060e08; padding: 96px 0; }
+
+    .bento {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: 240px 240px;
+      gap: 14px;
+    }
+
+    .bcard {
+      position: relative; border-radius: 20px; overflow: hidden;
+      transform-style: preserve-3d; will-change: transform;
+      transition: box-shadow .4s ease;
+      cursor: default;
+    }
+    .bcard-main { grid-column: 1; grid-row: 1 / 3; }
+    .bcard-sub  { grid-column: 2; }
+
+    .bcard-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform .7s cubic-bezier(.25,.46,.45,.94);
+    }
+    .bcard:hover .bcard-bg { transform: scale(1.06); }
+
+    .bcard-grad { position: absolute; inset: 0; }
+    .bcard-main .bcard-grad {
+      background: linear-gradient(160deg,
+        rgba(4,10,6,.25) 0%,
+        rgba(4,10,6,.55) 40%,
+        rgba(4,10,6,.92) 100%);
+    }
+    .bcard-sub .bcard-grad {
+      background: linear-gradient(to top,
+        rgba(4,10,6,.94) 0%,
+        rgba(4,10,6,.5) 55%,
+        rgba(4,10,6,.15) 100%);
+    }
+
+    .bcard-inner {
+      position: relative; z-index: 1;
+      padding: 32px; height: 100%;
+      display: flex; flex-direction: column;
+    }
+    .bcard-main .bcard-inner { padding: 40px; }
+
+    .bcard-num {
+      font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(255,255,255,.35); align-self: flex-start;
+    }
+
+    .bcard-stat { margin-top: auto; }
+    /* 숫자 행 — flex로 겹침 방지 */
+    .bcard-statrow {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      line-height: 1;
+    }
+    .bcard-big {
+      font-size: clamp(64px, 9vw, 108px);
+      font-weight: 900; letter-spacing: -.05em; line-height: .9;
+      color: #fff;
+    }
+    .bcard-med {
+      font-size: clamp(40px, 6vw, 68px);
+      font-weight: 900; letter-spacing: -.04em; line-height: .9;
+      color: #fff;
+    }
+    /* 녹색 기호·단위 — 독립 크기 */
+    .bcard-sup {
+      font-size: clamp(22px, 3vw, 44px);
+      font-weight: 900; letter-spacing: -.03em; line-height: 1;
+      color: var(--accent);
+      padding-top: .1em;
+    }
+    .bcard-stat-lbl {
+      font-size: 11px; color: rgba(255,255,255,.4);
+      margin-top: 8px; line-height: 1.5; letter-spacing: .01em;
+    }
+
+    .bcard-divider {
+      width: 28px; height: 2px; background: var(--accent);
+      margin: 18px 0 14px; opacity: .8;
+    }
+    .bcard-title {
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 800; letter-spacing: -.03em; color: #fff;
+      margin-bottom: 10px;
+    }
+    .bcard-sub .bcard-title { font-size: 17px; }
+    .bcard-body { font-size: 14px; line-height: 1.72; color: rgba(255,255,255,.58); }
+    .bcard-sub .bcard-body { font-size: 12px; color: rgba(255,255,255,.5); }
+
+    @media (max-width: 960px) {
+      .bento { grid-template-columns: 1fr 1fr; grid-template-rows: 280px 200px; }
+      .bcard:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
+      .bcard:nth-child(2) { grid-column: 1;     grid-row: 2; }
+      .bcard:nth-child(3) { grid-column: 2;     grid-row: 2; }
+    }
+    @media (max-width: 640px) {
+      .bento { grid-template-columns: 1fr 1fr; grid-template-rows: 260px 160px; }
+      .bcard:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
+      .bcard:nth-child(2) { grid-column: 1;     grid-row: 2; }
+      .bcard:nth-child(3) { grid-column: 2;     grid-row: 2; }
+      .bcard-main .bcard-inner { padding: 24px; }
+      .bcard-sub .bcard-inner  { padding: 18px; }
+      .bcard-sub .bcard-title  { font-size: 14px; }
+      .bcard-sub .bcard-body   { display: none; }
+      .bcard-sub .bcard-stat-lbl { font-size: 10px; }
+    }
+
+    /* ── SOLUTION TABS ── */
+    .sec-sol { background: var(--surface); padding: 96px 0; }
+
+    .prog-wrap {
+      display: grid;
+      grid-template-columns: 272px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .prog-tabs { display: flex; flex-direction: column; gap: 6px; position: sticky; top: 84px; }
+
+    .ptab {
+      all: unset; box-sizing: border-box;
+      display: flex; align-items: center; gap: 14px;
+      padding: 20px 22px; border-radius: 14px;
+      cursor: pointer; font-family: inherit;
+      border: 1px solid transparent;
+      position: relative;
+      transition: background .2s, border-color .2s, box-shadow .2s;
+    }
+    .ptab-bar {
+      position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 0; background: var(--accent);
+      border-radius: 0 3px 3px 0; transition: height .3s ease;
+    }
+    .ptab.is-active .ptab-bar { height: 54%; }
+    .ptab:hover { background: rgba(255,255,255,.7); }
+    .ptab.is-active { background: var(--canvas); border-color: var(--line); box-shadow: 0 3px 16px rgba(10,26,16,.07); }
+    .ptab-num { font-size: 10px; font-weight: 700; letter-spacing: .12em; color: var(--muted); flex-shrink: 0; }
+    .ptab.is-active .ptab-num { color: var(--accent); }
+    .ptab-name { font-size: 14px; font-weight: 600; letter-spacing: -.02em; color: var(--stone); flex: 1; line-height: 1.3; }
+    .ptab.is-active .ptab-name { color: var(--ink); }
+    .ptab-arr {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--glow); display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(.7); flex-shrink: 0;
+      transition: opacity .2s, transform .2s;
+    }
+    .ptab.is-active .ptab-arr { opacity: 1; transform: scale(1); }
+    .ptab-arr svg { width: 10px; height: 10px; stroke: var(--accent); fill: none; }
+
+    /* 패널 */
+    .prog-panels { border-radius: 20px; overflow: hidden; min-height: 520px; background: var(--ink); position: relative; }
+
+    .ppanel { display: none; }
+    .ppanel.is-active { display: block; animation: panelIn .38s cubic-bezier(.25,.46,.45,.94); }
+    @keyframes panelIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+    .ppanel-img {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform .7s ease;
+    }
+    .prog-panels:hover .ppanel-img { transform: scale(1.035); }
+    .ppanel-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(6,16,10,.95) 0%, rgba(6,16,10,.54) 45%, rgba(6,16,10,.12) 100%);
+    }
+    .ppanel-content {
+      position: relative; z-index: 1;
+      padding: 44px; min-height: 520px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .ppanel-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .ppanel-chip {
+      font-size: 11px; font-weight: 600; letter-spacing: .06em;
+      color: rgba(255,255,255,.82); background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18); border-radius: 999px;
+      padding: 4px 13px; backdrop-filter: blur(6px);
+    }
+    .ppanel-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block; }
+    .ppanel-h3 { font-size: clamp(24px, 3.2vw, 38px); font-weight: 800; letter-spacing: -.04em; line-height: 1.1; color: #fff; margin-bottom: 14px; }
+    .ppanel-desc { font-size: 15px; line-height: 1.76; color: rgba(255,255,255,.65); margin-bottom: 28px; max-width: 500px; }
+
+    /* ── TRUST ── */
+    .tcred-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-bottom: 40px; }
+    .tcred {
+      position: relative; overflow: hidden;
+      background: var(--canvas); border: 1px solid var(--line);
+      border-radius: 20px; padding: 32px 28px;
+      transition: box-shadow .25s, transform .25s;
+    }
+    .tcred::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-d));
+      border-radius: 20px 20px 0 0;
+    }
+    .tcred:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(10,26,16,.1); }
+    .tcred-ico {
+      width: 48px; height: 48px; background: var(--glow); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+    }
+    .tcred-ico svg { width: 23px; height: 23px; stroke: var(--accent-d); fill: none; stroke-width: 1.8; }
+    .tcred-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 7px; }
+    .tcred-title { font-size: 18px; font-weight: 800; letter-spacing: -.03em; color: var(--ink); margin-bottom: 10px; line-height: 1.2; }
+    .tcred-desc { font-size: 13px; line-height: 1.78; color: var(--stone); }
+
+    /* Big blockquote */
+    .trust-bq {
+      background: var(--ink); border-radius: 24px;
+      padding: 64px 60px; margin: 8px 0 40px;
+      position: relative; overflow: hidden;
+    }
+    .tbq-deco {
+      position: absolute; top: -40px; left: 32px;
+      font-size: 260px; line-height: 1; font-family: Georgia, 'Times New Roman', serif;
+      color: var(--accent); opacity: .1;
+      pointer-events: none; user-select: none;
+    }
+    .tbq-body { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; text-align: center; }
+    .tbq-line { width: 36px; height: 2px; background: var(--accent); border-radius: 2px; margin: 0 auto 28px; }
+    .tbq-text {
+      font-size: clamp(17px, 2.2vw, 22px); font-weight: 500;
+      letter-spacing: -.025em; line-height: 1.78;
+      color: #fff; margin-bottom: 28px;
+    }
+    .tbq-attr { font-size: 13px; color: rgba(255,255,255,.45); letter-spacing: -.01em; }
+
+    /* ── PRESS CARDS ── */
+    .press-articles { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--line); }
+    .pac {
+      display: block; background: var(--surface); border: 1px solid var(--line);
+      border-radius: 14px; padding: 24px 28px;
+      transition: box-shadow .2s, transform .2s, border-color .2s;
+      text-decoration: none; color: inherit;
+    }
+    .pac:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(10,26,16,.08); border-color: var(--accent); }
+    .pac-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .pac-source {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--accent-d); background: var(--glow); padding: 3px 10px; border-radius: 999px;
+    }
+    .pac-date { font-size: 12px; color: var(--stone); }
+    .pac-title { font-size: 16px; font-weight: 700; letter-spacing: -.025em; line-height: 1.4; margin-bottom: 10px; color: var(--ink); }
+    .pac-body { font-size: 13px; line-height: 1.72; color: var(--steel); }
+    .pac-arrow { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--accent); margin-top: 16px; }
+    .pac-arrow svg { width: 13px; height: 13px; stroke: var(--accent); fill: none; transition: transform .2s; }
+    .pac:hover .pac-arrow svg { transform: translateX(3px); }
+
+    @media (max-width: 640px) {
+      .press-articles { grid-template-columns: 1fr; }
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      padding: 100px 40px; text-align: center;
+      background: #061009;
+      position: relative; overflow: hidden;
+    }
+    .cta-band::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(42,154,90,.14) 0%, transparent 70%);
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .cta-lbl { font-size: 11px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--od35); margin-bottom: 22px; display: block; }
+    .cta-h2 { font-size: clamp(30px, 4vw, 52px); font-weight: 900; letter-spacing: -.05em; line-height: 1.06; color: var(--od); margin-bottom: 18px; }
+    .cta-sub { font-size: 16px; color: var(--od60); line-height: 1.72; margin-bottom: 40px; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── INSTAGRAM ── */
+    .insta-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+    .insta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; border-radius: 16px; overflow: hidden; }
+    .ic {
+      aspect-ratio: 1; overflow: hidden;
+      background: var(--line); cursor: pointer;
+      position: relative;
+    }
+    .ic img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; display: block; }
+    .ic:hover img { transform: scale(1.08); }
+    .ic-overlay {
+      position: absolute; inset: 0;
+      background: rgba(6,16,10,.5);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .25s;
+    }
+    .ic:hover .ic-overlay { opacity: 1; }
+    .ic-overlay svg { width: 28px; height: 28px; stroke: #fff; fill: none; }
+    .ic-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .ic-ph svg { width: 28px; height: 28px; stroke: var(--muted); fill: none; }
+
+    /* 위젯 자리 안내 오버레이 */
+    .insta-widget-wrap { position: relative; }
+    .insta-widget-notice {
+      position: absolute; inset: 0; z-index: 10;
+      background: rgba(2, 10, 5, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .iwn-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      padding: 32px 36px;
+      text-align: center;
+      max-width: 380px;
+    }
+    .iwn-ico { width: 48px; height: 48px; border-radius: 14px; background: rgba(42,154,90,.25); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .iwn-ico svg { width: 24px; height: 24px; stroke: var(--accent); fill: none; stroke-width: 1.8; }
+    .iwn-title { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -.025em; margin-bottom: 8px; }
+    .iwn-desc { font-size: 13px; color: rgba(255,255,255,.6); line-height: 1.7; margin-bottom: 20px; }
+    .iwn-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(42,154,90,.2); border: 1px solid rgba(42,154,90,.35); border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--accent); }
+    .iwn-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse-dot 1.8s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+    /* ── FOOTER ── */
+    .footer { background: #040c07; padding: 60px 40px 32px; border-top: 1px solid rgba(255,255,255,.05); }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 52px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 28px; }
+    .f-name { font-size: 14px; font-weight: 700; letter-spacing: -.02em; color: var(--od); margin-bottom: 8px; }
+    .f-desc { font-size: 12px; line-height: 1.78; color: var(--od60); margin-bottom: 22px; }
+    .f-col-ttl { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--od35); margin-bottom: 14px; }
+    .f-link { display: block; font-size: 13px; color: var(--od60); margin-bottom: 9px; transition: color .15s; }
+    .f-link:hover { color: var(--od); }
+    .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 11px; color: var(--od35); }
+
+    /* ════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+       ════════════════════════════════ */
+
+    /* ── 1100px: 약간 좁아지는 시점 ── */
+    @media (max-width: 1100px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .footer-top > div:first-child { grid-column: 1 / -1; }
+      .scard { padding: 28px; }
+    }
+
+    /* ── 960px: 타블렛 landscape ── */
+    @media (max-width: 960px) {
+      .wrap { padding: 0 28px; }
+      .nav-inner { padding: 0 28px; }
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: 13px; }
+      .hero-inner { padding: 0 28px; }
+      .insta-grid { grid-template-columns: repeat(3, 1fr); }
+      .sec { padding: 72px 0; }
+      .scard-arrow { opacity: .4; transform: scale(1); }
+    }
+
+    /* ── 768px: 타블렛 portrait / 모바일 landscape ── */
+    @media (max-width: 768px) {
+      .wrap { padding: 0 20px; }
+      .nav-inner { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav { height: 56px; }
+
+      .hero { padding: 88px 0 72px; }
+      .hero-inner { padding: 0 20px; }
+      .hero-h1 { max-width: 100%; }
+      .hero-sub { font-size: 15px; max-width: 100%; }
+      .hero-cta { flex-direction: column; align-items: flex-start; margin-bottom: 44px; }
+      .hero-cta .btn-lg { width: 100%; justify-content: center; }
+
+      .sec { padding: 64px 0; }
+      .sec-lead { margin-bottom: 40px; font-size: 15px; }
+
+      /* 문제 카드: 3열 → 1열 */
+      .prob-grid { grid-template-columns: 1fr; gap: 16px; }
+      .pcard { padding: 24px; }
+      .pcard:hover { transform: none; }
+
+      /* 솔루션 탭 모바일 */
+      .prog-wrap { grid-template-columns: 1fr; gap: 14px; }
+      .prog-tabs { flex-direction: row; flex-wrap: wrap; gap: 8px; position: static; overflow: visible; }
+      .ptab { flex: 1 1 calc(50% - 4px); min-width: 0; padding: 11px 10px; border-radius: 12px; background: rgba(0,0,0,.05); border-color: transparent !important; justify-content: center; text-align: center; }
+      .ptab.is-active { background: var(--ink) !important; border-color: var(--ink) !important; box-shadow: none; }
+      .ptab-bar, .ptab-num, .ptab-arr { display: none; }
+      .ptab-name { font-size: 13px; color: var(--steel); white-space: nowrap; }
+      .ptab.is-active .ptab-name { color: #fff; }
+      .prog-panels { min-height: 380px; border-radius: 16px; }
+      .ppanel-content { padding: 28px; min-height: 380px; }
+      .ppanel-h3 { font-size: clamp(20px, 5vw, 28px); }
+      .ppanel-desc { font-size: 13px; }
+
+      /* 신뢰 크레덴셜: 3열 → 1열 */
+      .tcred-grid { grid-template-columns: 1fr; gap: 12px; }
+      .tcred:hover { transform: none; }
+      .trust-bq { padding: 40px 28px; }
+      .tbq-deco { font-size: 160px; top: -20px; left: 16px; }
+      .tq-text { font-size: 16px; }
+
+      .press-row { margin-top: 32px; padding-top: 28px; gap: 10px; }
+
+      /* CTA */
+      .cta-band { padding: 72px 24px; }
+      .cta-btns { flex-direction: column; align-items: center; }
+      .cta-btns .btn-lg { width: 100%; max-width: 340px; justify-content: center; }
+
+      /* 인스타 그리드: 4열 → 3열 */
+      .insta-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .insta-head { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .ic { border-radius: 8px; }
+
+      /* 푸터 */
+      .footer { padding: 48px 20px 28px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .footer-top > div:first-child { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; gap: 6px; }
+    }
+
+    /* ── 480px: 모바일 portrait ── */
+    @media (max-width: 480px) {
+      .hero-h1 { font-size: clamp(38px, 10vw, 52px); }
+      .hero-eyebrow-text { font-size: 10px; letter-spacing: .08em; }
+      .hero-chips { gap: 8px; }
+      .chip { font-size: 11px; padding: 6px 12px; }
+
+      .sec-h2 { font-size: clamp(24px, 6vw, 32px); }
+
+      /* 인스타 그리드: 3열 → 2열 */
+      .insta-grid { grid-template-columns: repeat(2, 1fr); }
+      /* 5번째 셀 숨기기 */
+      .insta-grid .ic:nth-child(5) { display: none; }
+
+      /* 푸터 1열 */
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-top > div:first-child { grid-column: auto; }
+
+      .btn-lg { font-size: 14px; padding: 13px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <a href="https://jaejaelab.co.kr/" style="display:flex;align-items:center;gap:10px;">
+        <img class="nav-logo" src="https://cdn.imweb.me/upload/S20250729d673f6515e144/0d7ff957ac582.png" alt="재재환경연구소"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="nav-logo-fb">재재</div>
+      </a>
+      <span class="nav-badge">예비사회적기업</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="https://jaejaelab.co.kr/13">소개</a></li>
+      <li><a href="https://jaejaelab.co.kr/15">활동 &amp; 교육</a></li>
+      <li><a href="https://jaejaelab.co.kr/14">공지 &amp; 커뮤니티</a></li>
+    </ul>
+    <div class="nav-cta-wrap">
+      <a href="https://jaejaelab.co.kr/contactus" class="btn btn-dark" style="font-size:13px;padding:9px 18px;">문의하기</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="hero">
+  <div class="hero-photo" id="heroPhoto"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="hero-dot"></span>
+      <span class="hero-eyebrow-text">Environmental Education · Social Enterprise · Yangsan 2019</span>
+    </div>
+    <h1 class="hero-h1">
+      기후위기 시대,<br>
+      환경교육이<br>
+      <span class="hi">답입니다</span>
+    </h1>
+    <p class="hero-sub">지역 생태 기반의 참여형 교육과 체험, 맞춤형 교구 개발로 일상에서 실천되는 환경문화를 만드는 사회적기업입니다.</p>
+    <div class="hero-cta">
+      <a href="https://jaejaelab.co.kr/contactus" class="btn btn-white btn-lg">
+        교육·협업 문의하기
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="https://jaejaelab.co.kr/program" class="btn btn-ghost-w btn-lg">프로그램 보기</a>
+    </div>
+    <div class="hero-chips">
+      <div class="chip"><span class="chip-dot"></span>예비사회적기업 지정</div>
+      <div class="chip"><span class="chip-dot"></span>양산일보 언론 보도</div>
+      <div class="chip"><span class="chip-dot"></span>경남 양산 생태 전문</div>
+      <div class="chip"><span class="chip-dot"></span>ESG·CSR 협업 가능</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ── PROBLEM BENTO ── -->
+<section class="sec-prob">
+  <div class="wrap">
+    <div style="margin-bottom:44px;">
+      <span class="sec-label reveal" style="color:rgba(255,255,255,.38)">Problem</span>
+      <h2 class="sec-h2 reveal delay-1" style="color:#fff;margin-bottom:10px;">우리가 직면한<br>환경 위기</h2>
+      <p class="reveal delay-2" style="font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;">숫자로 보는 지구의 현재 — 지금 행동하지 않으면 회복할 수 없습니다.</p>
+    </div>
+    <div class="bento">
+
+      <!-- 메인 카드: 기후변화 -->
+      <div class="bcard bcard-main reveal-left">
+        <div class="bcard-bg" style="background-image:url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=75')"></div>
+        <div class="bcard-grad"></div>
+        <div class="bcard-inner">
+          <span class="bcard-num">01 — 기후변화</span>
+          <div class="bcard-stat">
+            <div class="bcard-statrow">
+              <span class="bcard-sup">+</span>
+              <span class="bcard-big"><span class="cnt" data-to="1.2" data-dec="1">0</span></span>
+              <span class="bcard-sup">°C</span>
+            </div>
+            <div class="bcard-stat-lbl">산업화 이전 대비 지구 평균 기온 상승 · IPCC 2023</div>
+          </div>
+          <div class="bcard-divider"></div>
+          <h3 class="bcard-title">탄소 배출이 지구를 바꾸고 있습니다</h3>
+          <p class="bcard-body">이상기온, 극단적 날씨, 해수면 상승으로 생태계 전반이 위협받고 있습니다. 지금 행동하지 않으면 회복 불가능한 변화가 찾아옵니다.</p>
+        </div>
+      </div>
+
+      <!-- 서브 카드 1: 자원고갈 -->
+      <div class="bcard bcard-sub reveal delay-1">
+        <div class="bcard-bg" style="background-image:url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=800&q=75')"></div>
+        <div class="bcard-grad"></div>
+        <div class="bcard-inner">
+          <span class="bcard-num">02 — 자원고갈</span>
+          <div class="bcard-stat">
+            <div class="bcard-statrow">
+              <span class="bcard-med"><span class="cnt" data-to="8" data-dec="0">0</span></span>
+              <span class="bcard-sup">월</span>
+            </div>
+            <div class="bcard-stat-lbl">2023 지구 자원 소진일 · Earth Overshoot Day</div>
+          </div>
+          <div class="bcard-divider"></div>
+          <h3 class="bcard-title">자원고갈</h3>
+          <p class="bcard-body">매년 점점 더 빨리 지구의 자원을 소비합니다.</p>
+        </div>
+      </div>
+
+      <!-- 서브 카드 2: 생물다양성 -->
+      <div class="bcard bcard-sub reveal delay-2">
+        <div class="bcard-bg" style="background-image:url('https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=800&q=75')"></div>
+        <div class="bcard-grad"></div>
+        <div class="bcard-inner">
+          <span class="bcard-num">03 — 생물다양성</span>
+          <div class="bcard-stat">
+            <div class="bcard-statrow">
+              <span class="bcard-med"><span class="cnt" data-to="69" data-dec="0">0</span></span>
+              <span class="bcard-sup">%</span>
+            </div>
+            <div class="bcard-stat-lbl">지난 50년간 야생동물 개체수 감소 · WWF 2022</div>
+          </div>
+          <div class="bcard-divider"></div>
+          <h3 class="bcard-title">생물다양성 감소</h3>
+          <p class="bcard-body">매일 수십 종의 생물이 사라지고 있습니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SOLUTION ── -->
+<section class="sec-sol" id="programs">
+  <div class="wrap">
+    <span class="sec-label reveal">Solution</span>
+    <h2 class="sec-h2 reveal delay-1">재재환경연구소의<br>접근법</h2>
+    <p class="sec-lead reveal delay-2">감성 생태교육을 기반으로 배움이 습관이 되는 환경문화를 설계합니다.</p>
+
+    <div class="prog-wrap reveal delay-2">
+      <!-- 탭 목록 -->
+      <div class="prog-tabs" role="tablist">
+        <button class="ptab is-active" data-panel="0" role="tab">
+          <div class="ptab-bar"></div>
+          <span class="ptab-num">01</span>
+          <span class="ptab-name">참여형 생태교육</span>
+          <span class="ptab-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </button>
+        <button class="ptab" data-panel="1" role="tab">
+          <div class="ptab-bar"></div>
+          <span class="ptab-num">02</span>
+          <span class="ptab-name">맞춤형 교구 개발</span>
+          <span class="ptab-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </button>
+        <button class="ptab" data-panel="2" role="tab">
+          <div class="ptab-bar"></div>
+          <span class="ptab-num">03</span>
+          <span class="ptab-name">학교·교육기관</span>
+          <span class="ptab-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </button>
+        <button class="ptab" data-panel="3" role="tab">
+          <div class="ptab-bar"></div>
+          <span class="ptab-num">04</span>
+          <span class="ptab-name">기업·공공기관 ESG</span>
+          <span class="ptab-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </button>
+      </div>
+
+      <!-- 패널 -->
+      <div class="prog-panels">
+
+        <div class="ppanel is-active">
+          <div class="ppanel-img" style="background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_373Mvxmpp2G4QxtwgvcJPH5pYLj/hf_20260629_090008_2390ea5c-bc1d-42fc-867e-b0471426e9a9_min.webp')"></div>
+          <div class="ppanel-grad"></div>
+          <div class="ppanel-content">
+            <div class="ppanel-chips">
+              <span class="ppanel-chip">학교·교육기관</span>
+              <span class="ppanel-chip">가족·지역사회</span>
+              <span class="ppanel-chip">현장 체험</span>
+            </div>
+            <span class="ppanel-eyebrow">Program 01</span>
+            <h3 class="ppanel-h3">참여형 생태교육</h3>
+            <p class="ppanel-desc">양산천·신불산 일대를 직접 걸으며 지역 생태계를 체험하는 현장 중심 프로그램. 왜가리, 백로, 희귀 식물과 함께하는 살아있는 교육으로 환경 감수성을 높입니다.</p>
+            <a href="https://jaejaelab.co.kr/program" class="btn btn-white">자세히 보기 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+
+        <div class="ppanel">
+          <div class="ppanel-img" style="background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_373Mvxmpp2G4QxtwgvcJPH5pYLj/hf_20260629_090012_c9753e53-9861-4694-a18f-2f047bbf2161_min.webp')"></div>
+          <div class="ppanel-grad"></div>
+          <div class="ppanel-content">
+            <div class="ppanel-chips">
+              <span class="ppanel-chip">교실 활용</span>
+              <span class="ppanel-chip">DIY 키트</span>
+              <span class="ppanel-chip">직접 개발</span>
+            </div>
+            <span class="ppanel-eyebrow">Program 02</span>
+            <h3 class="ppanel-h3">맞춤형 교구 개발</h3>
+            <p class="ppanel-desc">벌꿀식물 키트, 감정 생태카드, 밀랍랩 등 직접 개발한 환경 교육 교구. 생활 속에서 자연을 체험하는 키트로 교실에서도 생태감수성을 키웁니다.</p>
+            <a href="https://jaejaelab.co.kr/program" class="btn btn-white">자세히 보기 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+
+        <div class="ppanel">
+          <div class="ppanel-img" style="background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_373Mvxmpp2G4QxtwgvcJPH5pYLj/hf_20260629_090016_7b957a62-052d-4cae-aeed-c9a52fcfee82_min.webp')"></div>
+          <div class="ppanel-grad"></div>
+          <div class="ppanel-content">
+            <div class="ppanel-chips">
+              <span class="ppanel-chip">교과 연계</span>
+              <span class="ppanel-chip">특별 활동</span>
+              <span class="ppanel-chip">전 연령대</span>
+            </div>
+            <span class="ppanel-eyebrow">Program 03</span>
+            <h3 class="ppanel-h3">학교·교육기관 프로그램</h3>
+            <p class="ppanel-desc">교과 연계 생태수업, 환경 감수성 향상 특별 프로그램. 어르신부터 아이들까지 소외 없는 환경교육을 위한 다양한 연령대 맞춤 운영.</p>
+            <a href="https://jaejaelab.co.kr/program" class="btn btn-white">자세히 보기 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+
+        <div class="ppanel">
+          <div class="ppanel-img" style="background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_373Mvxmpp2G4QxtwgvcJPH5pYLj/hf_20260629_090021_2649dab8-b1a4-4ace-9b93-ec638380ec38_min.webp')"></div>
+          <div class="ppanel-grad"></div>
+          <div class="ppanel-content">
+            <div class="ppanel-chips">
+              <span class="ppanel-chip">CSR / ESG</span>
+              <span class="ppanel-chip">임직원 체험</span>
+              <span class="ppanel-chip">기업 맞춤</span>
+            </div>
+            <span class="ppanel-eyebrow">Program 04</span>
+            <h3 class="ppanel-h3">기업·공공기관 ESG 협업</h3>
+            <p class="ppanel-desc">CSR·ESG 환경 협업 프로그램, 임직원 생태체험 교육. 플로깅, 미소서식지 복원, 도시양봉 프로젝트 등 기업 맞춤 환경 활동 기획 및 운영.</p>
+            <a href="https://jaejaelab.co.kr/contactus" class="btn btn-white">협업 문의하기 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST ── -->
+<section class="sec">
+  <div class="wrap">
+    <span class="sec-label reveal">Trust</span>
+    <h2 class="sec-h2 reveal delay-1">신뢰할 수 있는 이유</h2>
+    <p class="sec-lead reveal delay-2">공인된 기관 지위와 언론의 검증, 지역 기반의 실적으로 재재환경연구소의 전문성을 확인하세요.</p>
+    <div class="tcred-grid">
+      <div class="tcred reveal delay-1">
+        <div class="tcred-ico">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="tcred-eyebrow">공인 기관</div>
+        <div class="tcred-title">예비사회적기업</div>
+        <div class="tcred-desc">정부 공식 지정 기관으로, 사회적 가치 실현을 인정받은 환경교육 전문 기관입니다.</div>
+      </div>
+      <div class="tcred reveal delay-2">
+        <div class="tcred-ico">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div class="tcred-eyebrow">언론 검증</div>
+        <div class="tcred-title">양산일보 보도</div>
+        <div class="tcred-desc">지역 언론이 직접 현장을 취재하며 생태탐방 프로그램의 전문성과 신뢰성을 검증했습니다.</div>
+      </div>
+      <div class="tcred reveal delay-3">
+        <div class="tcred-ico">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        </div>
+        <div class="tcred-eyebrow">지역 기반</div>
+        <div class="tcred-title">경남 양산 전문</div>
+        <div class="tcred-desc">2019년부터 양산천·신불산 일대 생태계를 연구·교육해온 지역 밀착형 환경 전문 기관입니다.</div>
+      </div>
+    </div>
+
+    <blockquote class="trust-bq reveal">
+      <div class="tbq-deco">"</div>
+      <div class="tbq-body">
+        <div class="tbq-line"></div>
+        <div class="tbq-text">"아이와 함께 양산천에서 생태계 체험을 하면서<br>많은 것을 알게 된 시간이 됐다"</div>
+        <div class="tbq-attr">생태탐방 참가자 · 양산천 하늘다람쥐 생태탐방 현장 — 양산일보 보도 (2024.12)</div>
+      </div>
+    </blockquote>
+    <div class="press-articles">
+      <a href="https://www.yangsanilbo.com/news/articleView.html?idxno=112818" target="_blank" rel="noopener" class="pac reveal delay-1">
+        <div class="pac-meta">
+          <span class="pac-source">양산일보</span>
+          <span class="pac-date">2024.12.02 · 반수현 기자</span>
+        </div>
+        <div class="pac-title">"양산천에서 생태계를 탐험해요"</div>
+        <div class="pac-body">재재환경연구소 공동 주최 '하늘다람쥐 친구와 함께하는 생태탐방' 행사 현장 보도. 참가자들이 전문 생태해설사와 함께 양산천 고유종을 발견하는 현장을 취재했습니다.</div>
+        <div class="pac-arrow">기사 보기 <svg viewBox="0 0 24 24" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+      <a href="https://www.yangsanilbo.com/news/articleView.html?idxno=112750" target="_blank" rel="noopener" class="pac reveal delay-2">
+        <div class="pac-meta">
+          <span class="pac-source">양산일보</span>
+          <span class="pac-date">2024.11.29 · 배정현 기자</span>
+        </div>
+        <div class="pac-title">"하늘다람쥐 친구와 함께 생태탐방해요"</div>
+        <div class="pac-body">양산천·신불산 일대 생태탐방 프로그램 사전 소개. 신불산 멸종위기 하늘다람쥐 보전 활동과 양산 고유 생물 다양성 체험 행사를 알렸습니다.</div>
+        <div class="pac-arrow">기사 보기 <svg viewBox="0 0 24 24" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BAND ── -->
+<section id="contact" class="cta-band">
+  <div class="cta-inner">
+    <span class="cta-lbl reveal">Get Started</span>
+    <h2 class="cta-h2 reveal delay-1">교육·협업을<br>시작하고 싶으신가요?</h2>
+    <p class="cta-sub reveal delay-2">학교, 교육기관, 기업, 공공기관에 맞는 맞춤 환경교육을 제안해드립니다. 지금 바로 문의하세요.</p>
+    <div class="cta-btns reveal delay-3">
+      <a href="https://jaejaelab.co.kr/contactus" class="btn btn-white btn-lg">
+        교육·협업 문의하기
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="https://jaejaelab.co.kr/program" class="btn btn-ghost-w btn-lg">프로그램 전체보기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── INSTAGRAM ── -->
+<section class="sec sec-surface">
+  <div class="wrap">
+    <div class="insta-head">
+      <div>
+        <span class="sec-label reveal">Instagram</span>
+        <h3 class="reveal delay-1" style="font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--ink);">@jaejae_lab 활동 현장</h3>
+      </div>
+      <a href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener" class="btn btn-dark reveal" style="font-size:13px;padding:10px 18px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        팔로우하기
+      </a>
+    </div>
+    <div class="insta-widget-wrap reveal">
+      <div class="insta-grid">
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig1.jpg" alt="울산독수리학교 태화강 생태교육" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig2.jpg" alt="울산독수리학교 2026년 출발" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig3.jpg" alt="재재환경연구소 울산독수리학교" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig4.jpg" alt="경상남도소상공인연합회 표창장" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig5.jpg" alt="양산사회적경제" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig6.jpg" alt="초등학교 환경수업" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig7.jpg" alt="제주감귤껍질점토 환경교육" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig8.jpg" alt="미소서식지 복원 활동" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+        <a class="ic" href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener">
+          <img src="insta_imgs/ig9.jpg" alt="재재환경연구소 활동" loading="lazy">
+          <div class="ic-overlay"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="f-name">재재환경연구소</div>
+        <div class="f-desc">지역 생태 기반의 참여형 교육과 체험,<br>맞춤형 교구 개발로 환경문화를 만드는 사회적기업.</div>
+        <a href="https://jaejaelab.co.kr/contactus" class="btn btn-accent" style="font-size:12px;padding:9px 18px;">교육·협업 문의하기</a>
+      </div>
+      <div>
+        <div class="f-col-ttl">프로그램</div>
+        <a href="https://jaejaelab.co.kr/program" class="f-link">참여형 생태교육</a>
+        <a href="https://jaejaelab.co.kr/program" class="f-link">맞춤형 교구 개발</a>
+        <a href="https://jaejaelab.co.kr/program" class="f-link">학교·교육기관</a>
+        <a href="https://jaejaelab.co.kr/contactus" class="f-link">기업 ESG 협업 문의</a>
+      </div>
+      <div>
+        <div class="f-col-ttl">채널</div>
+        <a href="https://blog.naver.com/jaejae-lab" target="_blank" rel="noopener" class="f-link">네이버 블로그</a>
+        <a href="https://www.instagram.com/jaejae_lab/" target="_blank" rel="noopener" class="f-link">인스타그램 @jaejae_lab</a>
+        <a href="https://smartstore.naver.com/jaejae76" target="_blank" rel="noopener" class="f-link">스마트스토어</a>
+      </div>
+      <div>
+        <div class="f-col-ttl">연락처</div>
+        <a href="tel:01096850602" class="f-link">010-9685-0602</a>
+        <a href="mailto:jaejae_lab@naver.com" class="f-link">jaejae_lab@naver.com</a>
+        <div class="f-link" style="cursor:default;">경남 양산시 물금읍 황산로 609, 2층</div>
+        <div class="f-link" style="cursor:default;">사업자번호 407-87-02840</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>(주)재재환경연구소 · 예비사회적기업</span>
+      <span>© 2019 Jaejae Environmental Research Lab. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 1. NAV 스크롤 감지
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // 2. 히어로 사진 Ken Burns 효과
+  const heroPhoto = document.getElementById('heroPhoto');
+  window.addEventListener('load', () => {
+    setTimeout(() => heroPhoto.classList.add('loaded'), 100);
+  });
+
+  // 3. 히어로 패럴랙스
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    heroPhoto.style.transform = `scale(1.2) translateY(${-y * 0.08}px)`;
+  }, { passive: true });
+
+  // 4. 스크롤 reveal (IntersectionObserver)
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // 5. 카운터 애니메이션
+  function runCount(el) {
+    const target = parseFloat(el.dataset.to);
+    const dec    = parseInt(el.dataset.dec) || 0;
+    const dur    = 1600;
+    const t0     = performance.now();
+    (function tick(now) {
+      const p    = Math.min((now - t0) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = (ease * target).toFixed(dec);
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = target.toFixed(dec);
+    })(t0);
+  }
+  const cntIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { runCount(e.target); cntIO.unobserve(e.target); }
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.cnt').forEach(el => cntIO.observe(el));
+
+  // 6. Solution 탭 전환
+  (function() {
+    const tabs   = document.querySelectorAll('.ptab');
+    const panels = document.querySelectorAll('.ppanel');
+    if (!tabs.length) return;
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const idx = parseInt(tab.dataset.panel, 10);
+        tabs.forEach(t => t.classList.remove('is-active'));
+        panels.forEach(p => p.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        if (panels[idx]) panels[idx].classList.add('is-active');
+      });
+    });
+  })();
+
+  // 7. 벤토 카드 마우스 틸트 (데스크톱만)
+  const mq = window.matchMedia('(hover: hover) and (min-width: 769px)');
+  if (mq.matches) {
+    document.querySelectorAll('.bcard').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r  = card.getBoundingClientRect();
+        const x  = (e.clientX - r.left) / r.width  - 0.5;
+        const y  = (e.clientY - r.top)  / r.height - 0.5;
+        const rx = -y * 10;
+        const ry =  x * 10;
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+        card.style.boxShadow = `${-ry * 2}px ${rx * 2}px 40px rgba(0,0,0,.5)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.boxShadow = '';
+      });
+    });
+  }
+</script>
+</body>
+</html>
