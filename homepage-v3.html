@@ -1098,9 +1098,9 @@
   </div>
 </footer>
 
-<!-- 인터랙션 스크립트 (외부 파일, jsDelivr CDN).
-     아임웹은 본문의 외부 <script src>는 유지하므로 이 줄만으로도 동작함.
-     (footer 공통코드에 같은 줄을 넣어도 중복 가드로 안전) -->
-<script src="https://cdn.jsdelivr.net/gh/Brrriann/jaejae@master/jjlab.js"></script>
+<!-- 인터랙션 스크립트(jjlab.js)는 아임웹 [footer 공통코드]에 넣습니다.
+     ★ jsDelivr @master 는 캐시 지연이 있으므로 커밋 해시 고정 URL을 사용:
+     <script src="https://cdn.jsdelivr.net/gh/Brrriann/jaejae@688cc015de9da44808386848e4626301cea53ce5/jjlab.js"></script>
+     (단독 파일로 직접 열어 테스트할 땐 위 한 줄의 주석을 풀어 body 끝에 두면 됨) -->
 </body>
 </html>
