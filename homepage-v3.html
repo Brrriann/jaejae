@@ -657,6 +657,23 @@
       .hero-h1 { font-size: clamp(38px,10vw,52px) !important; }
       .sec-h2  { font-size: clamp(24px,6vw,32px)  !important; }
     }
+
+    /* ============================================================
+       아임웹 테마 글자색 덮어쓰기 — 버튼·푸터 텍스트가 테마 기본색
+       (#363636)으로 바뀌어 어두운 배경에서 안 보이는 문제 해결
+       ============================================================ */
+    .btn-dark, .btn-accent, .btn-ghost-w { color: #fff !important; }
+    .btn-white { color: var(--ink) !important; }
+    .f-name        { color: #fff !important; }
+    .f-desc        { color: rgba(255,255,255,.60) !important; }
+    .f-col-ttl     { color: rgba(255,255,255,.35) !important; }
+    .f-link        { color: rgba(255,255,255,.60) !important; }
+    .f-link:hover  { color: #fff !important; }
+    .footer-bottom, .footer-bottom span { color: rgba(255,255,255,.35) !important; }
+
+    /* 최상단 흰 줄 제거 — 아임웹 .section_wrap 의 padding-top:5px 때문에
+       그 틈으로 흰색 body 배경이 보이던 문제 */
+    .section_wrap { padding-top: 0 !important; }
   </style>
   <script>document.documentElement.className += ' jjs';</script>
 </head>
