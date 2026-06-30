@@ -74,13 +74,13 @@
     /* CONTAINER */
     .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
 
-    /* ── NAV ── */
-    .nav {
+    /* ── NAV ── (nav.nav 로 한정 — 아임웹 테마의 ul.nav 와 충돌 방지) */
+    nav.nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 300;
       height: 64px; display: flex; align-items: center;
       transition: background .3s, backdrop-filter .3s, border-color .3s, box-shadow .3s;
     }
-    .nav.scrolled {
+    nav.nav.scrolled {
       background: rgba(255,255,255,.95);
       backdrop-filter: saturate(180%) blur(16px);
       border-bottom: 1px solid var(--line);
@@ -93,8 +93,8 @@
     .nav-badge { font-size: 10px; font-weight: 600; letter-spacing: .04em; color: var(--accent-d); background: var(--glow); padding: 3px 9px; border-radius: 999px; }
     .nav-links { display: flex; gap: 26px; list-style: none; }
     .nav-links a { font-size: 14px; font-weight: 500; color: var(--od60); transition: color .15s; }
-    .nav.scrolled .nav-links a { color: var(--steel); }
-    .nav-links a:hover, .nav.scrolled .nav-links a:hover { color: var(--ink); }
+    nav.nav.scrolled .nav-links a { color: var(--steel); }
+    .nav-links a:hover, nav.nav.scrolled .nav-links a:hover { color: var(--ink); }
     .nav-cta-wrap { transition: opacity .3s; }
 
     /* ── HERO ── */
@@ -529,7 +529,7 @@
       display: block; height: 2px; border-radius: 2px;
       background: var(--od); transition: background .2s, transform .3s, opacity .2s;
     }
-    .nav.scrolled .nav-ham span { background: var(--ink); }
+    nav.nav.scrolled .nav-ham span { background: var(--ink); }
     .nav-ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-ham.open span:nth-child(2) { opacity: 0; }
     .nav-ham.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -556,7 +556,7 @@
       .nav-inner { padding: 0 20px; }
       .nav-links { display: none; }
       .nav-ham { display: flex; }
-      .nav { height: 56px; }
+      nav.nav { height: 56px; }
 
       .hero { padding: 88px 0 72px; }
       .hero-inner { padding: 0 20px; }
