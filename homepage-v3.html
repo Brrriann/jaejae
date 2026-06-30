@@ -632,6 +632,31 @@
 
       .btn-lg { font-size: 14px; padding: 13px 24px; }
     }
+
+    /* ============================================================
+       아임웹 테마 폰트 강제 덮어쓰기 — 반드시 맨 끝 (테마가 h1·h2 등
+       제목 요소의 font-family/size/weight를 !important로 덮으므로,
+       동일하게 !important + 클래스 선택자로 우선순위를 되찾는다)
+       ============================================================ */
+    .hero-h1, .sec-h2, .bcard-title, .ppanel-h3, .cta-h2, .insta-head h3,
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Pretendard','Noto Sans KR','Inter',-apple-system,BlinkMacSystemFont,sans-serif !important;
+    }
+    .hero-h1     { font-size: clamp(46px,6.5vw,82px) !important; font-weight: 900 !important; }
+    .sec-h2      { font-size: clamp(28px,3.5vw,44px) !important; font-weight: 800 !important; }
+    .bcard-title { font-size: clamp(18px,2.2vw,26px) !important; font-weight: 800 !important; }
+    .bcard-sub .bcard-title { font-size: 17px !important; }
+    .ppanel-h3   { font-size: clamp(24px,3.2vw,38px) !important; font-weight: 800 !important; }
+    .cta-h2      { font-size: clamp(30px,4vw,52px)  !important; font-weight: 900 !important; }
+    .insta-head h3 { font-size: 22px !important; font-weight: 700 !important; }
+    @media (max-width: 768px) {
+      .bcard-sub .bcard-title { font-size: 14px !important; }
+      .ppanel-h3 { font-size: clamp(20px,5vw,28px) !important; }
+    }
+    @media (max-width: 480px) {
+      .hero-h1 { font-size: clamp(38px,10vw,52px) !important; }
+      .sec-h2  { font-size: clamp(24px,6vw,32px)  !important; }
+    }
   </style>
   <script>document.documentElement.className += ' jjs';</script>
 </head>
@@ -656,12 +681,12 @@
     <div class="nav-cta-wrap">
       <a href="https://jaejaelab.co.kr/contactus" class="btn btn-dark" style="font-size:13px;padding:9px 18px;">문의하기</a>
     </div>
-    <button class="nav-ham" id="navHam" aria-label="메뉴" onclick="var m=document.getElementById('navMobile');var o=m.classList.toggle('open');this.classList.toggle('open',o);">
+    <button class="nav-ham" id="navHam" aria-label="메뉴">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
-<div class="nav-mobile" id="navMobile" onclick="this.classList.remove('open');document.getElementById('navHam').classList.remove('open');">
+<div class="nav-mobile" id="navMobile">
   <a href="https://jaejaelab.co.kr/13">소개</a>
   <a href="https://jaejaelab.co.kr/15">활동 &amp; 교육</a>
   <a href="https://jaejaelab.co.kr/14">공지 &amp; 커뮤니티</a>
@@ -785,25 +810,25 @@
     <div class="prog-wrap reveal delay-2">
       <!-- 탭 목록 -->
       <div class="prog-tabs" role="tablist">
-        <button class="ptab is-active" data-panel="0" role="tab" onclick="var ps=document.querySelectorAll('.ppanel'),ts=document.querySelectorAll('.ptab'),i=+this.getAttribute('data-panel');for(var k=0;k&lt;ts.length;k++)ts[k].classList.remove('is-active');for(var k=0;k&lt;ps.length;k++)ps[k].classList.remove('is-active');this.classList.add('is-active');if(ps[i])ps[i].classList.add('is-active');">
+        <button class="ptab is-active" data-panel="0" role="tab">
           <div class="ptab-bar"></div>
           <span class="ptab-num">01</span>
           <span class="ptab-name">참여형 생태교육</span>
           <span class="ptab-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </button>
-        <button class="ptab" data-panel="1" role="tab" onclick="var ps=document.querySelectorAll('.ppanel'),ts=document.querySelectorAll('.ptab'),i=+this.getAttribute('data-panel');for(var k=0;k&lt;ts.length;k++)ts[k].classList.remove('is-active');for(var k=0;k&lt;ps.length;k++)ps[k].classList.remove('is-active');this.classList.add('is-active');if(ps[i])ps[i].classList.add('is-active');">
+        <button class="ptab" data-panel="1" role="tab">
           <div class="ptab-bar"></div>
           <span class="ptab-num">02</span>
           <span class="ptab-name">맞춤형 교구 개발</span>
           <span class="ptab-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </button>
-        <button class="ptab" data-panel="2" role="tab" onclick="var ps=document.querySelectorAll('.ppanel'),ts=document.querySelectorAll('.ptab'),i=+this.getAttribute('data-panel');for(var k=0;k&lt;ts.length;k++)ts[k].classList.remove('is-active');for(var k=0;k&lt;ps.length;k++)ps[k].classList.remove('is-active');this.classList.add('is-active');if(ps[i])ps[i].classList.add('is-active');">
+        <button class="ptab" data-panel="2" role="tab">
           <div class="ptab-bar"></div>
           <span class="ptab-num">03</span>
           <span class="ptab-name">학교·교육기관</span>
           <span class="ptab-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
         </button>
-        <button class="ptab" data-panel="3" role="tab" onclick="var ps=document.querySelectorAll('.ppanel'),ts=document.querySelectorAll('.ptab'),i=+this.getAttribute('data-panel');for(var k=0;k&lt;ts.length;k++)ts[k].classList.remove('is-active');for(var k=0;k&lt;ps.length;k++)ps[k].classList.remove('is-active');this.classList.add('is-active');if(ps[i])ps[i].classList.add('is-active');">
+        <button class="ptab" data-panel="3" role="tab">
           <div class="ptab-bar"></div>
           <span class="ptab-num">04</span>
           <span class="ptab-name">기업·공공기관 ESG</span>
@@ -1056,116 +1081,11 @@
   </div>
 </footer>
 
-<script>
-(function init() {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-    return;
-  }
-
-  document.documentElement.className += ' jjs';
-
-  // 1. NAV 스크롤 감지
-  const nav = document.getElementById('nav');
-  if (nav) window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
-
-  // 1b. 햄버거 메뉴
-  const ham = document.getElementById('navHam');
-  const mob = document.getElementById('navMobile');
-  if (ham && mob) {
-    ham.addEventListener('click', () => {
-      const open = mob.classList.toggle('open');
-      ham.classList.toggle('open', open);
-      ham.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
-    });
-    mob.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => { mob.classList.remove('open'); ham.classList.remove('open'); });
-    });
-  }
-
-  // 2. 히어로 사진 Ken Burns 효과
-  const heroPhoto = document.getElementById('heroPhoto');
-  window.addEventListener('load', () => {
-    setTimeout(() => heroPhoto.classList.add('loaded'), 100);
-  });
-
-  // 3. 히어로 패럴랙스 (히어로 높이 초과 시 클램프 — 하단 여백 방지)
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    const maxY = document.getElementById('hero').offsetHeight;
-    const ty = -Math.min(y, maxY) * 0.08;
-    heroPhoto.style.transform = `scale(1.2) translateY(${ty}px)`;
-  }, { passive: true });
-
-  // 4. 스크롤 reveal (IntersectionObserver)
-  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  revealEls.forEach(el => io.observe(el));
-
-  // 5. 카운터 애니메이션
-  function runCount(el) {
-    const target = parseFloat(el.dataset.to);
-    const dec    = parseInt(el.dataset.dec) || 0;
-    const dur    = 1600;
-    const t0     = performance.now();
-    (function tick(now) {
-      const p    = Math.min((now - t0) / dur, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      el.textContent = (ease * target).toFixed(dec);
-      if (p < 1) requestAnimationFrame(tick);
-      else el.textContent = target.toFixed(dec);
-    })(t0);
-  }
-  const cntIO = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { runCount(e.target); cntIO.unobserve(e.target); }
-    });
-  }, { threshold: 0.6 });
-  document.querySelectorAll('.cnt').forEach(el => cntIO.observe(el));
-
-  // 6. Solution 탭 전환
-  (function() {
-    const tabs   = document.querySelectorAll('.ptab');
-    const panels = document.querySelectorAll('.ppanel');
-    if (!tabs.length) return;
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const idx = parseInt(tab.dataset.panel, 10);
-        tabs.forEach(t => t.classList.remove('is-active'));
-        panels.forEach(p => p.classList.remove('is-active'));
-        tab.classList.add('is-active');
-        if (panels[idx]) panels[idx].classList.add('is-active');
-      });
-    });
-  })();
-
-  // 7. 벤토 카드 마우스 틸트 (데스크톱만)
-  const mq = window.matchMedia('(hover: hover) and (min-width: 769px)');
-  if (mq.matches) {
-    document.querySelectorAll('.bcard').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r  = card.getBoundingClientRect();
-        const x  = (e.clientX - r.left) / r.width  - 0.5;
-        const y  = (e.clientY - r.top)  / r.height - 0.5;
-        const rx = -y * 10;
-        const ry =  x * 10;
-        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
-        card.style.boxShadow = `${-ry * 2}px ${rx * 2}px 40px rgba(0,0,0,.5)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-        card.style.boxShadow = '';
-      });
-    });
-  }
-
-})(); // init
-</script>
+<!-- 인터랙션 스크립트 (외부 파일).
+     · 단독/로컬: 같은 폴더의 jjlab.js 사용
+     · 아임웹: 본문의 <script>는 제거되므로, 아래 줄을 본문이 아니라
+       [사이트 설정 > 헤더/푸터 스크립트 삽입]에 jsDelivr 주소로 넣을 것:
+       <script src="https://cdn.jsdelivr.net/gh/Brrriann/jaejae@master/jjlab.js"></script> -->
+<script src="jjlab.js"></script>
 </body>
 </html>
