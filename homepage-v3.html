@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
   <title>재재환경연구소 — 환경교육 전문기관</title>
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -25,7 +27,8 @@
       --od35:      rgba(255,255,255,.35);
       --od10:      rgba(255,255,255,.10);
     }
-    html { font-family: 'Pretendard', 'Inter', -apple-system, sans-serif; -webkit-font-smoothing: antialiased; color: var(--ink); scroll-behavior: smooth; }
+    html { font-family: 'Pretendard', 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important; -webkit-font-smoothing: antialiased; color: var(--ink); scroll-behavior: smooth; }
+    body, button, input, select, textarea { font-family: 'Pretendard', 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important; }
     body { background: var(--canvas); overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
     img { display: block; max-width: 100%; }
@@ -513,11 +516,42 @@
       .scard-arrow { opacity: .4; transform: scale(1); }
     }
 
+    /* ── HAMBURGER ── */
+    .nav-ham {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      width: 40px; height: 40px; cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .nav-ham span {
+      display: block; height: 2px; border-radius: 2px;
+      background: var(--od); transition: background .2s, transform .3s, opacity .2s;
+    }
+    .nav.scrolled .nav-ham span { background: var(--ink); }
+    .nav-ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-ham.open span:nth-child(2) { opacity: 0; }
+    .nav-ham.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* 모바일 드롭다운 */
+    .nav-mobile {
+      display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 299;
+      background: rgba(10,26,16,.97); backdrop-filter: blur(16px);
+      padding: 16px 20px 24px; flex-direction: column; gap: 4px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-size: 16px; font-weight: 600; color: rgba(255,255,255,.8);
+      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: color .15s;
+    }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: #fff; }
+
     /* ── 768px: 타블렛 portrait / 모바일 landscape ── */
     @media (max-width: 768px) {
       .wrap { padding: 0 20px; }
       .nav-inner { padding: 0 20px; }
       .nav-links { display: none; }
+      .nav-ham { display: flex; }
       .nav { height: 56px; }
 
       .hero { padding: 88px 0 72px; }
@@ -617,8 +651,17 @@
     <div class="nav-cta-wrap">
       <a href="https://jaejaelab.co.kr/contactus" class="btn btn-dark" style="font-size:13px;padding:9px 18px;">문의하기</a>
     </div>
+    <button class="nav-ham" id="navHam" aria-label="메뉴 열기">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="https://jaejaelab.co.kr/13">소개</a>
+  <a href="https://jaejaelab.co.kr/15">활동 &amp; 교육</a>
+  <a href="https://jaejaelab.co.kr/14">공지 &amp; 커뮤니티</a>
+  <a href="https://jaejaelab.co.kr/contactus" style="color:var(--accent);">문의하기</a>
+</div>
 
 <!-- ── HERO ── -->
 <section class="hero" id="hero">
@@ -1009,11 +1052,31 @@
 </footer>
 
 <script>
+(function init() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+    return;
+  }
+
   // 1. NAV 스크롤 감지
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   }, { passive: true });
+
+  // 1b. 햄버거 메뉴
+  const ham = document.getElementById('navHam');
+  const mob = document.getElementById('navMobile');
+  if (ham && mob) {
+    ham.addEventListener('click', () => {
+      const open = mob.classList.toggle('open');
+      ham.classList.toggle('open', open);
+      ham.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    });
+    mob.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => { mob.classList.remove('open'); ham.classList.remove('open'); });
+    });
+  }
 
   // 2. 히어로 사진 Ken Burns 효과
   const heroPhoto = document.getElementById('heroPhoto');
@@ -1094,6 +1157,8 @@
       });
     });
   }
+
+})(); // init
 </script>
 </body>
 </html>
