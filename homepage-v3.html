@@ -262,16 +262,22 @@
     .bcard-sub .bcard-body { font-size: 12px; color: rgba(255,255,255,.5); }
 
     @media (max-width: 960px) {
-      .bento { grid-template-columns: 1fr 1fr; grid-template-rows: 280px 200px; }
+      /* 메인 카드 행: auto(내용 맞춤) → 텍스트 잘림 방지 */
+      .bento { grid-template-columns: 1fr 1fr; grid-template-rows: auto 200px; }
       .bcard:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
       .bcard:nth-child(2) { grid-column: 1;     grid-row: 2; }
       .bcard:nth-child(3) { grid-column: 2;     grid-row: 2; }
+      .bcard-main { min-height: 300px; }
+      /* 세로 공간이 내용에 맞춰지므로 숫자를 아래로 밀던 auto 여백 해제 */
+      .bcard-main .bcard-stat { margin-top: 18px; }
     }
     @media (max-width: 640px) {
-      .bento { grid-template-columns: 1fr 1fr; grid-template-rows: 260px 160px; }
+      .bento { grid-template-columns: 1fr 1fr; grid-template-rows: auto 160px; }
       .bcard:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
       .bcard:nth-child(2) { grid-column: 1;     grid-row: 2; }
       .bcard:nth-child(3) { grid-column: 2;     grid-row: 2; }
+      .bcard-main { min-height: 0; }
+      .bcard-main .bcard-stat { margin-top: 16px; }
       .bcard-main .bcard-inner { padding: 24px; }
       .bcard-sub .bcard-inner  { padding: 18px; }
       .bcard-sub .bcard-title  { font-size: 14px; }
@@ -1087,7 +1093,7 @@
         <div class="f-col-ttl">연락처</div>
         <a href="tel:01096850602" class="f-link">010-9685-0602</a>
         <a href="mailto:jaejae_lab@naver.com" class="f-link">jaejae_lab@naver.com</a>
-        <div class="f-link" style="cursor:default;">경남 양산시 물금읍 황산로 609, 2층</div>
+        <div class="f-link" style="cursor:default;">경상남도 양산시 양주2길 82-12 (중부동)</div>
         <div class="f-link" style="cursor:default;">사업자번호 407-87-02840</div>
       </div>
     </div>

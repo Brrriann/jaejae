@@ -1,0 +1,131 @@
+<h2>홈페이지 구조, 어떤 방식으로 갈까요?</h2>
+<p class="subtitle">같은 C 디자인 방향 + 동일 콘텐츠 — 정보를 배치하는 방식의 차이입니다</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="target-split" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:14px;font-family:sans-serif;font-size:10px;">
+        <!-- Hero -->
+        <div style="background:#1e4d2b;color:#fff;border-radius:4px;padding:10px;margin-bottom:8px;text-align:center;">
+          <div style="font-size:13px;font-weight:800;margin-bottom:4px;">지역 생태 기반 환경교육 전문기관</div>
+          <div style="font-size:9px;opacity:0.7;">재재환경연구소 · 예비사회적기업 · 양산</div>
+        </div>
+        <!-- Target Split -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+          <div style="border:2px solid #1e4d2b;border-radius:4px;padding:10px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#1e4d2b;margin-bottom:4px;">🏫 학교 · 교육기관</div>
+            <div style="font-size:9px;color:#555;line-height:1.5;">교과 연계 생태교육<br>체험 프로그램</div>
+            <div style="background:#1e4d2b;color:#fff;padding:4px;border-radius:3px;margin-top:6px;font-size:9px;">프로그램 보기 →</div>
+          </div>
+          <div style="border:2px solid #1e4d2b;border-radius:4px;padding:10px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#1e4d2b;margin-bottom:4px;">🏢 기업 · 공공기관</div>
+            <div style="font-size:9px;color:#555;line-height:1.5;">ESG·CSR 환경<br>협업 프로그램</div>
+            <div style="background:#1e4d2b;color:#fff;padding:4px;border-radius:3px;margin-top:6px;font-size:9px;">협업 문의하기 →</div>
+          </div>
+        </div>
+        <!-- Trust bar -->
+        <div style="background:#f0f7f0;border-radius:4px;padding:8px;display:flex;justify-content:space-around;margin-bottom:8px;">
+          <div style="text-align:center;font-size:9px;color:#1e4d2b;font-weight:700;">예비<br>사회적기업</div>
+          <div style="width:1px;background:#ccc;"></div>
+          <div style="text-align:center;font-size:9px;color:#1e4d2b;font-weight:700;">언론<br>보도</div>
+          <div style="width:1px;background:#ccc;"></div>
+          <div style="text-align:center;font-size:9px;color:#1e4d2b;font-weight:700;">양산<br>기반</div>
+        </div>
+        <!-- Programs preview -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;">
+          <div style="background:#f5f5f5;border-radius:3px;padding:6px;text-align:center;font-size:8px;color:#444;">생태탐방</div>
+          <div style="background:#f5f5f5;border-radius:3px;padding:6px;text-align:center;font-size:8px;color:#444;">교구개발</div>
+          <div style="background:#f5f5f5;border-radius:3px;padding:6px;text-align:center;font-size:8px;color:#444;">ESG교육</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. 타겟 분기형</h3>
+      <p>히어로 바로 아래 "학교용 / 기업용" 두 갈래로 나눔. 방문자가 자신과 관련된 정보로 즉시 이동. 두 타겟 모두를 효과적으로 커버.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="storytelling" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:14px;font-family:sans-serif;font-size:10px;">
+        <!-- Hero -->
+        <div style="background:#1e4d2b;color:#fff;border-radius:4px;padding:10px;margin-bottom:8px;">
+          <div style="font-size:12px;font-weight:800;">환경교육으로<br>지속가능한 미래를</div>
+          <div style="display:flex;gap:6px;margin-top:8px;">
+            <div style="background:#fff;color:#1e4d2b;padding:4px 8px;border-radius:2px;font-size:9px;font-weight:700;">프로그램 보기</div>
+            <div style="border:1px solid rgba(255,255,255,0.6);color:#fff;padding:4px 8px;border-radius:2px;font-size:9px;">협업 문의</div>
+          </div>
+        </div>
+        <!-- Problem -->
+        <div style="border-left:3px solid #1e4d2b;padding:8px 10px;margin-bottom:8px;background:#fafafa;">
+          <div style="font-size:9px;color:#888;font-weight:600;margin-bottom:3px;">우리가 해결하는 문제</div>
+          <div style="font-size:9px;color:#333;">기후변화 · 자원고갈 · 생물다양성 감소</div>
+        </div>
+        <!-- Solution -->
+        <div style="margin-bottom:8px;">
+          <div style="font-size:9px;color:#1e4d2b;font-weight:700;margin-bottom:4px;">재재환경연구소의 방법</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+            <div style="background:#f0f7f0;padding:6px;border-radius:3px;font-size:8px;color:#1e4d2b;">참여형 생태교육</div>
+            <div style="background:#f0f7f0;padding:6px;border-radius:3px;font-size:8px;color:#1e4d2b;">맞춤 교구 개발</div>
+            <div style="background:#f0f7f0;padding:6px;border-radius:3px;font-size:8px;color:#1e4d2b;">ESG/CSR 협업</div>
+            <div style="background:#f0f7f0;padding:6px;border-radius:3px;font-size:8px;color:#1e4d2b;">지역 생태 기반</div>
+          </div>
+        </div>
+        <!-- CTA -->
+        <div style="background:#1e4d2b;color:#fff;padding:7px;border-radius:3px;text-align:center;font-size:9px;font-weight:700;">교육·협업 문의하기 →</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. 스토리텔링형</h3>
+      <p>문제 → 우리 해결책 → 신뢰 → 행동 순서로 내러티브 흐름. 처음 방문자가 기관을 이해하는 데 가장 효과적. 설득력 높음.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="program-first" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:14px;font-family:sans-serif;font-size:10px;">
+        <!-- Compact hero -->
+        <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1e4d2b;padding-bottom:8px;margin-bottom:10px;">
+          <div>
+            <div style="font-size:12px;font-weight:800;color:#1e4d2b;">재재환경연구소</div>
+            <div style="font-size:8px;color:#888;">환경교육 전문기관 · 예비사회적기업</div>
+          </div>
+          <div style="background:#1e4d2b;color:#fff;padding:5px 10px;border-radius:3px;font-size:9px;font-weight:700;">문의하기</div>
+        </div>
+        <!-- Programs grid - main focus -->
+        <div style="font-size:9px;font-weight:700;color:#333;margin-bottom:6px;">운영 프로그램</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+          <div style="border:1px solid #e0e0e0;border-radius:4px;padding:8px;">
+            <div style="font-size:8px;color:#1e4d2b;font-weight:700;margin-bottom:3px;">🌿 생태탐방</div>
+            <div style="font-size:7px;color:#666;line-height:1.4;">양산천·신불산<br>지역 생태체험</div>
+          </div>
+          <div style="border:1px solid #e0e0e0;border-radius:4px;padding:8px;">
+            <div style="font-size:8px;color:#1e4d2b;font-weight:700;margin-bottom:3px;">🐝 교구개발</div>
+            <div style="font-size:7px;color:#666;line-height:1.4;">벌꿀식물키트<br>감정생태카드</div>
+          </div>
+          <div style="border:1px solid #e0e0e0;border-radius:4px;padding:8px;">
+            <div style="font-size:8px;color:#1e4d2b;font-weight:700;margin-bottom:3px;">🏢 ESG교육</div>
+            <div style="font-size:7px;color:#666;line-height:1.4;">기업·공공기관<br>협업 프로그램</div>
+          </div>
+          <div style="border:1px solid #e0e0e0;border-radius:4px;padding:8px;">
+            <div style="font-size:8px;color:#1e4d2b;font-weight:700;margin-bottom:3px;">🏫 학교교육</div>
+            <div style="font-size:7px;color:#666;line-height:1.4;">교과 연계<br>생태수업</div>
+          </div>
+        </div>
+        <!-- Press & contact -->
+        <div style="background:#f0f7f0;border-radius:3px;padding:7px;text-align:center;font-size:8px;color:#1e4d2b;">양산일보 보도 · 언론 소개 기관</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. 프로그램 선공개형</h3>
+      <p>히어로 최소화하고 바로 프로그램 카드 노출. "뭘 하는 곳인지" 가장 빠르게 파악. 재방문자와 목적 있는 방문자에게 효율적.</p>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:20px;padding:14px;background:rgba(30,77,43,0.06);border-radius:6px;">
+  <p class="label">추천</p>
+  <p style="font-size:13px;color:var(--text-secondary);margin:4px 0 0;">B2B 타겟이 두 곳(학교·기업)이라면 <strong>A 타겟 분기형</strong>이 가장 실용적입니다. 혼합도 가능해요 — 예: "A 구조 + B 스토리텔링 흐름".</p>
+</div>
