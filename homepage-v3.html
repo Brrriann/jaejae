@@ -1081,11 +1081,9 @@
   </div>
 </footer>
 
-<!-- 인터랙션 스크립트 (외부 파일).
-     · 단독/로컬: 같은 폴더의 jjlab.js 사용
-     · 아임웹: 본문의 <script>는 제거되므로, 아래 줄을 본문이 아니라
-       [사이트 설정 > 헤더/푸터 스크립트 삽입]에 jsDelivr 주소로 넣을 것:
-       <script src="https://cdn.jsdelivr.net/gh/Brrriann/jaejae@master/jjlab.js"></script> -->
-<script src="jjlab.js"></script>
+<!-- 인터랙션 스크립트 (외부 파일, jsDelivr CDN).
+     아임웹은 본문의 외부 <script src>는 유지하므로 이 줄만으로도 동작함.
+     (footer 공통코드에 같은 줄을 넣어도 중복 가드로 안전) -->
+<script src="https://cdn.jsdelivr.net/gh/Brrriann/jaejae@master/jjlab.js"></script>
 </body>
 </html>

@@ -10,46 +10,65 @@
 (function () {
   'use strict';
 
-  // reveal 숨김 활성화 (이 클래스가 없으면 .reveal 은 그냥 보임)
-  document.documentElement.className += ' jjs';
+  // 중복 로드 방지 (본문 + footer 양쪽에 들어가도 한 번만 실행)
+  if (window.__jjLabLoaded) return;
+  window.__jjLabLoaded = true;
 
-  /* ── 1. 클릭 이벤트 위임 (탭 전환 + 햄버거 메뉴) ── */
+  // reveal 숨김 활성화 (이 클래스가 없으면 .reveal 은 그냥 보임)
+  if (document.documentElement.className.indexOf('jjs') === -1) {
+    document.documentElement.className += ' jjs';
+  }
+
+  /* ── 1. 클릭 이벤트 위임 — 캡처 단계 (아임웹이 전파를 stopPropagation 해도
+         document 캡처는 가장 먼저 실행되므로 항상 잡힌다) ── */
   document.addEventListener('click', function (e) {
-    // 1-a. 프로그램 탭
-    var tab = e.target.closest ? e.target.closest('.ptab') : null;
-    if (tab) {
-      var idx = parseInt(tab.getAttribute('data-panel'), 10) || 0;
-      var tabs = document.querySelectorAll('.ptab');
-      var panels = document.querySelectorAll('.ppanel');
-      for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('is-active');
-      for (var j = 0; j < panels.length; j++) panels[j].classList.remove('is-active');
-      tab.classList.add('is-active');
-      if (panels[idx]) panels[idx].classList.add('is-active');
-      return;
-    }
-    // 1-b. 햄버거 토글
-    var ham = e.target.closest ? e.target.closest('#navHam') : null;
-    if (ham) {
-      var mob = document.getElementById('navMobile');
-      if (mob) {
-        var open = mob.classList.toggle('open');
-        ham.classList.toggle('open', open);
-      }
-      return;
-    }
-    // 1-c. 모바일 메뉴 항목 클릭 시 닫기
-    var mlink = e.target.closest ? e.target.closest('#navMobile a') : null;
+    var t = e.target;
+    var tab = t.closest ? t.closest('.ptab') : null;
+    if (tab) { activateTab(tab); return; }
+    var ham = t.closest ? t.closest('#navHam') : null;
+    if (ham) { toggleMenu(); return; }
+    var mlink = t.closest ? t.closest('#navMobile a') : null;
     if (mlink) {
       var m = document.getElementById('navMobile');
       var h = document.getElementById('navHam');
       if (m) m.classList.remove('open');
       if (h) h.classList.remove('open');
     }
-  }, false);
+  }, true);
+
+  /* ── 탭 전환 / 햄버거 동작 (위임과 별개로 직접 바인딩에서도 호출) ── */
+  function activateTab(tab) {
+    if (!tab) return;
+    var idx = parseInt(tab.getAttribute('data-panel'), 10) || 0;
+    var tabs = document.querySelectorAll('.ptab');
+    var panels = document.querySelectorAll('.ppanel');
+    for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('is-active');
+    for (var j = 0; j < panels.length; j++) panels[j].classList.remove('is-active');
+    tab.classList.add('is-active');
+    if (panels[idx]) panels[idx].classList.add('is-active');
+  }
+  function toggleMenu() {
+    var mob = document.getElementById('navMobile');
+    var ham = document.getElementById('navHam');
+    if (!mob) return;
+    var open = mob.classList.toggle('open');
+    if (ham) ham.classList.toggle('open', open);
+  }
 
   /* ── 메인 초기화 (DOM 준비 후) ── */
   function init() {
     var d = document;
+
+    // 0. 탭·햄버거에 직접 리스너 바인딩 (아임웹이 이벤트 전파를 막아도 작동)
+    d.querySelectorAll('.ptab').forEach(function (tab) {
+      tab.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); activateTab(tab); }, false);
+    });
+    var hamBtn = d.getElementById('navHam');
+    if (hamBtn) hamBtn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); toggleMenu(); }, false);
+    var mobMenu = d.getElementById('navMobile');
+    if (mobMenu) mobMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { mobMenu.classList.remove('open'); if (hamBtn) hamBtn.classList.remove('open'); }, false);
+    });
 
     // 2. NAV 스크롤 감지
     var nav = d.getElementById('nav');
