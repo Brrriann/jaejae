@@ -1021,10 +1021,12 @@
     setTimeout(() => heroPhoto.classList.add('loaded'), 100);
   });
 
-  // 3. 히어로 패럴랙스
+  // 3. 히어로 패럴랙스 (히어로 높이 초과 시 클램프 — 하단 여백 방지)
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    heroPhoto.style.transform = `scale(1.2) translateY(${-y * 0.08}px)`;
+    const maxY = document.getElementById('hero').offsetHeight;
+    const ty = -Math.min(y, maxY) * 0.08;
+    heroPhoto.style.transform = `scale(1.2) translateY(${ty}px)`;
   }, { passive: true });
 
   // 4. 스크롤 reveal (IntersectionObserver)
